@@ -1,8 +1,13 @@
-import React from 'react'
+import {useRouter } from 'next/router'
 
-export default function  rotas() {
+export default function  buscar() {
+  const router = useRouter()
+  const query = router.query.id
+
+  console.log(router)
+  
   return (
     <div> 
-        <h1>rotas / id /buscar</h1></div>
+        <h1>rotas / {query} /buscar</h1></div>
   )
 }
