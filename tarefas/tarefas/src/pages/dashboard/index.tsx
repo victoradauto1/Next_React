@@ -18,6 +18,7 @@ import {
   where,
   onSnapshot,
 } from "firebase/firestore";
+import Link from 'next/link'
 
 interface HomeProps {
   user: {
@@ -89,6 +90,17 @@ export default function Dashboad({ user }: HomeProps) {
     setPublicTask(false);
   };
 
+  async function handleShare (id: string){
+    await navigator.clipboard.writeText(
+      `${process.env.NEXT_PUBLIC_URL}/task/${id}`
+    )
+  }
+
+  async function handleDeleteTask(id: string){
+    const docRef = doc(db, )
+  }
+
+
   return (
     <div className={styles.dashboard}>
       <Head>
@@ -128,13 +140,15 @@ export default function Dashboad({ user }: HomeProps) {
                 {item.public && (
                   <div className={styles.tagContainer}>
                     <label className={styles.tag}>PÚBLICO</label>
-                    <button className={styles.shareButton}>
-                      <FiShare2 size={22} color="#3182ff" />
+                    <button className={styles.shareButton} onClick={()=>handleShare(item.id)}>
+                      <FiShare2 size={22} color="#040405" />
                     </button>
                   </div>
                 )}
                 <div className={styles.taskContent}>
-                  <p>{item.tarefa}</p>
+                  {item.public? (<Link href={`/task/${item.id}`}>
+                    <p>{item.tarefa}</p>
+                    </Link>): <p>{item.tarefa}</p>}
                   <button className={styles.trashButton}>
                     <FaTrash size={24} color="#ea3140" />
                   </button>
