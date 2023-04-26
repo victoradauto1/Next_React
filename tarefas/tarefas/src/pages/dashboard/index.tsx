@@ -17,6 +17,8 @@ import {
   orderBy,
   where,
   onSnapshot,
+  doc,
+  deleteDoc
 } from "firebase/firestore";
 import Link from 'next/link'
 
@@ -97,7 +99,8 @@ export default function Dashboad({ user }: HomeProps) {
   }
 
   async function handleDeleteTask(id: string){
-    const docRef = doc(db, )
+    const docRef = doc(db, "tarefas", id )
+    await deleteDoc(docRef)
   }
 
 
@@ -149,7 +152,7 @@ export default function Dashboad({ user }: HomeProps) {
                   {item.public? (<Link href={`/task/${item.id}`}>
                     <p>{item.tarefa}</p>
                     </Link>): <p>{item.tarefa}</p>}
-                  <button className={styles.trashButton}>
+                  <button className={styles.trashButton} onClick={()=> handleDeleteTask(item.id)}>
                     <FaTrash size={24} color="#ea3140" />
                   </button>
                 </div>
