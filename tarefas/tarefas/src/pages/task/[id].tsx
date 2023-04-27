@@ -27,13 +27,14 @@ export default function Task(){
     )
 }
 
-export const getServeSideProps: GetServerSideProps = async ({ params})=>{
+export const getServerSideProps: GetServerSideProps = async ({ params})=>{
 
     const id = params?.id as string
 
     const docRef = doc(db, "tarefas", id)
 
     const snapShot = await getDoc(docRef)
+  
 
     if( snapShot.data() === undefined){
         return{
@@ -53,7 +54,18 @@ export const getServeSideProps: GetServerSideProps = async ({ params})=>{
         }
     }
 
-    console.log(snapShot.data())
+    const milisecond = snapShot.data()?.created?.seconds * 1000
+
+    const task = {
+        tarefa: snapShot.data()?.tarefa,
+        public: snapShot.data()?.public,
+        created: new Date(milisecond).toLocaleDateString(),
+        user: snapShot.data()?.user,
+        taskId: id,
+
+    }
+
+    console.log(task)
 
     return{
         props:{}
