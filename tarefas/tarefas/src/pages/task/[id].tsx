@@ -1,14 +1,21 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
-import { useSession } from 'next-auth/react'
+import { ChangeEvent, FormEvent, useState } from "react";
+import { useSession } from "next-auth/react";
 
 import Head from "next/head";
 import styles from "./styles.module.css";
 import { GetServerSideProps } from "next";
 
 import { db } from "../../services/firebaseConnection";
-import { doc, collection, query, where, getDoc } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  query,
+  where,
+  getDoc,
+  addDoc,
+} from "firebase/firestore";
 
-import { Textearea } from '../../components/textarea'
+import { Textearea } from "../../components/textarea";
 
 interface TaskProps {
   item: {
@@ -21,15 +28,31 @@ interface TaskProps {
 }
 
 export default function Task({ item }: TaskProps) {
-
   const { data: session } = useSession();
 
-  const[input, setInput] = useState("");
-  
-  const handleComment = async (e:FormEvent) =>{
-    e.preventDefault()
-    alert("Texto enviado")
-  }
+  const [input, setInput] = useState("");
+
+  const handleComment = async (e: FormEvent) => {
+    e.preventDefault();
+
+    if (input === "") return;
+
+    if (!session?.user?.email || !session?.user?.name) return;
+
+    try {
+      const refDoc = await addDoc(collection(db, "comments"), {
+        comment: input,
+        created: new Date(),
+        user: session?.user?.email,
+        name: session?.user?.name,
+        taskID: item?.taskId
+      })
+    } catch (err) {
+      console.log(err);
+    }
+
+    setInput("")
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -43,17 +66,20 @@ export default function Task({ item }: TaskProps) {
       </main>
 
       <section className={styles.commentsContainer}>
-
         <h2>Fazer comentário</h2>
 
         <form onSubmit={handleComment}>
-            <Textearea
+          <Textearea
             value={input}
-            onChange={ (e: ChangeEvent<HTMLTextAreaElement>)=> setInput(e.target.value)}
-            placeholder="Digite seu comentário..."/>
-            <button  disabled={!session?.user} className={styles.button}>Enviar comentário</button>
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+              setInput(e.target.value)
+            }
+            placeholder="Digite seu comentário..."
+          />
+          <button disabled={!session?.user} className={styles.button}>
+            Enviar comentário
+          </button>
         </form>
-
       </section>
     </div>
   );
@@ -93,8 +119,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     user: snapShot.data()?.user,
     taskId: id,
   };
-
-
 
   return {
     props: {
