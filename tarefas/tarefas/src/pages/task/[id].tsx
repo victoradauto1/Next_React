@@ -1,3 +1,6 @@
+import { ChangeEvent, FormEvent, useState } from 'react'
+import { useSession } from 'next-auth/react'
+
 import Head from "next/head";
 import styles from "./styles.module.css";
 import { GetServerSideProps } from "next";
@@ -18,6 +21,15 @@ interface TaskProps {
 }
 
 export default function Task({ item }: TaskProps) {
+
+  const { data: session } = useSession();
+
+  const[input, setInput] = useState("");
+  
+  const handleComment = async (e:FormEvent) =>{
+    e.preventDefault()
+    alert("Texto enviado")
+  }
   return (
     <div className={styles.container}>
       <Head>
@@ -34,10 +46,12 @@ export default function Task({ item }: TaskProps) {
 
         <h2>Fazer comentário</h2>
 
-        <form>
-            <Textearea 
+        <form onSubmit={handleComment}>
+            <Textearea
+            value={input}
+            onChange={ (e: ChangeEvent<HTMLTextAreaElement>)=> setInput(e.target.value)}
             placeholder="Digite seu comentário..."/>
-            <button className={styles.button}>Enviar comentário</button>
+            <button  disabled={!session?.user} className={styles.button}>Enviar comentário</button>
         </form>
 
       </section>
@@ -80,7 +94,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     taskId: id,
   };
 
-  console.log(task);
+
 
   return {
     props: {
