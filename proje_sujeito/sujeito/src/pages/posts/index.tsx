@@ -1,9 +1,16 @@
+import { GetStaticProps } from 'next'
+
 import Head from 'next/head'
 import styles from './style.module.scss'
 import Link from 'next/link'
 import Image from 'next/image'
 import thumb from '../../../public/images/thumb.png'
 import {FiChevronLeft, FiChevronsLeft, FiChevronRight, FiChevronsRight} from 'react-icons/fi'
+
+import { getPrismicClient } from '../../services/prismic'
+import Prismic from '@prismicio/client'
+import {RichText} from 'prismic-dom'
+
 
 export default function Posts() {
     return(
@@ -44,4 +51,25 @@ export default function Posts() {
             </main>
         </div>
     )
+}
+
+export const getStaticProps: GetStaticProps = async ()=>{
+
+     const prismic = getPrismicClient();
+
+     const response = await prismic.query([
+        Prismic.Predicates.at('document.type', 'post')
+     ], {
+        orderings: '[document.last_publication_date desc]',  //ordenar pela data mais rescente
+        fetch:['post.title', 'post.description', 'post.cover'],
+        pageSize: 3
+     })
+
+        console.log(response)
+        
+        return{
+            props:{
+
+            }
+        }
 }
