@@ -11,8 +11,23 @@ import { getPrismicClient } from '../../services/prismic'
 import Prismic from '@prismicio/client'
 import {RichText} from 'prismic-dom'
 
+type Post = {
+    slug: string;
+    title: string,
+    cover: string,
+    description: string,
+    updateAt: string;
 
-export default function Posts() {
+}
+
+interface PostProps{
+    posts: Post[]
+}
+
+export default function Posts({posts}:PostProps) {
+
+    console.log(posts)
+    
     return(
         <div>
             <Head>
@@ -65,11 +80,25 @@ export const getStaticProps: GetStaticProps = async ()=>{
         pageSize: 3
      })
 
-        console.log(response)
+        const posts = response.results.map( post =>{
+            return{
+                slug: post.uid,
+                title: RichText.asText(post.data.title),
+                descripitiom: post.data.descriptiom.find((content: { type: string }) => content.type === 'paragraph')?.text ?? '',
+                cover: post.data.cover.url,
+                updateAt: new Date(post.last_publication_date).toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+                })
+
+            }
+        })
         
         return{
             props:{
-
-            }
+                posts
+            },
+            revalidate: 60 * 30 //Atualiza a cada 30 minutos
         }
 }
