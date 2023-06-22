@@ -1,5 +1,7 @@
 import { GetStaticProps } from "next";
 
+import { useState} from 'react'
+
 import Head from "next/head";
 import styles from "../styles/home.module.scss";
 
@@ -27,6 +29,7 @@ interface ContentProps{
 }
 
 export default function Home({content}: ContentProps) {
+
 
   return (
     <>
