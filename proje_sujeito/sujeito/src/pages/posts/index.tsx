@@ -25,7 +25,6 @@ type Post = {
   description: string;
   updateAt: string;
 };
-
 interface PostProps {
   posts: Post[];
   page:string;
@@ -37,6 +36,55 @@ export default function Posts({ posts: postsBlog, page, totalPage }: PostProps) 
   const[currentPage, setCurrentPage] = useState(Number(page))
   
   const [posts, setPosts] = useState(postsBlog || []);
+
+  //buscar novos posts
+
+  async function reqPost (pageNumber: number){
+    const prismic = getPrismicClient();
+
+    const response = await prismic.query([
+      Prismic.predicates.at('document,type','post')],
+      {
+        orderings: "[document.last_publication_date desc]", //ordenar pela data mais rescente
+        fetch: ["post.title", "post.description", "post.cover"],
+        pageSize: 3,
+        page: String(pageNumber)
+      }
+    )
+
+    return response
+  }
+
+  const navigatePage= async(pageNumber: number)=>{
+    const response =  await reqPost(pageNumber)
+
+    if(response.results.length === 0){
+      return
+    }
+
+    const getPosts: Post[] = response.results.map((post) => {
+      return {
+        slug: post.uid? post.uid: "",
+        title: RichText.asText(post.data.title)? RichText.asText(post.data.title): "",
+        description: Array.isArray(post.data.description)
+          ? post.data.description.find(
+              (content: { type: string }) => content.type === "paragraph"
+            )?.text ?? ""
+          : "",
+        cover: post.data.cover.url? post.data.cover.url : "" ,
+        updateAt:
+          post.last_publication_date?
+          new Date(post.last_publication_date).toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          }): "",
+      };
+    });
+
+    setCurrentPage(pageNumber)
+    setPosts(getPosts)
+  }
 
   return (
     <div>
@@ -64,22 +112,26 @@ export default function Posts({ posts: postsBlog, page, totalPage }: PostProps) 
             </Link>
           ))}
           <div className={styles.buttonNavigate}>
-            <div>
-              <button>
-                <FiChevronsLeft size={25} color="#fff" />
-              </button>
-              <button>
-                <FiChevronLeft size={25} color="#fff" />
-              </button>
-            </div>
-            <div>
-              <button>
-                <FiChevronRight size={25} color="#fff" />
-              </button>
-              <button>
-                <FiChevronsRight size={25} color="#fff" />
-              </button>
-            </div>
+           { Number(currentPage)>= 2 && (
+             <div>
+             <button onClick={()=> navigatePage(1)}>
+               <FiChevronsLeft size={25} color="#fff" />
+             </button>
+             <button onClick={()=> navigatePage(Number(currentPage - 1))}>
+               <FiChevronLeft size={25} color="#fff" />
+             </button>
+           </div>
+           )}
+           { Number(currentPage) < Number(totalPage) && (
+             <div>
+             <button onClick={()=> navigatePage(Number(currentPage + 1))}>
+               <FiChevronRight size={25} color="#fff" />
+             </button>
+             <button onClick={()=> navigatePage(Number(totalPage))}>
+               <FiChevronsRight size={25} color="#fff" />
+             </button>
+           </div>
+           )}
           </div>
         </div>
       </main>
@@ -103,7 +155,7 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       slug: post.uid,
       title: RichText.asText(post.data.title),
-      descripition: Array.isArray(post.data.description)
+      description: Array.isArray(post.data.description)
         ? post.data.description.find(
             (content: { type: string }) => content.type === "paragraph"
           )?.text ?? ""
