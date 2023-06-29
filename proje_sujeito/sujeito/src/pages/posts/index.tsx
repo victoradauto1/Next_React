@@ -64,7 +64,7 @@ export default function Posts({ posts: postsBlog, page, totalPage }: PostProps) 
 
     const getPosts: Post[] = response.results.map((post) => {
       return {
-        slug: post.uid? post.uid: "",
+        slug: post.uid? post.uid: "n",
         title: RichText.asText(post.data.title)? RichText.asText(post.data.title): "",
         description: Array.isArray(post.data.description)
           ? post.data.description.find(
