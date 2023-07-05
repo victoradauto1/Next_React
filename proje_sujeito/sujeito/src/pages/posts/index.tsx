@@ -155,11 +155,7 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       slug: post.uid,
       title: RichText.asText(post.data.title),
-      description: Array.isArray(post.data.description)
-        ? post.data.description.find(
-            (content: { type: string }) => content.type === "paragraph"
-          )?.text ?? ""
-        : "",
+      description:post.data.description.find((content:{type:string; text:string}) => content.type === 'paragraph')?.text?? '',
       cover: post.data.cover.url,
       updateAt:
         post.last_publication_date &&
@@ -170,6 +166,8 @@ export const getStaticProps: GetStaticProps = async () => {
         }),
     };
   });
+
+  console.log(posts)
 
   return {
     props: {

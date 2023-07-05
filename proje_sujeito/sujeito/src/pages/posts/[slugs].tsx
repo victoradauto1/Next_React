@@ -1,6 +1,8 @@
 import { GetServerSideProps } from 'next'
 import styles from './posts.module.scss'
 
+import Head from 'next/head'
+import Image from 'next/image'
 import { getPrismicClient} from "../../services/prismic"
 import { RichText } from 'prismic-dom'
 
@@ -9,7 +11,7 @@ interface PostProps{
         slug: string;
         title: string;
         description: string;
-        corver: string;
+        cover: string;
         upDatedAt: string
     }
 }
@@ -18,9 +20,28 @@ export default function Post({post}: PostProps){
 
     console.log(post)
     return(
-        <div>
-            <h1>DETALHE DO POST</h1>
-        </div>
+        <>
+            <Head>
+                <title>{post.title}</title>
+            </Head>
+            <main className={styles.container}>
+                <article className={styles.post}>
+                    <Image
+                        quality={100}
+                        src={post.cover}
+                        width={720}
+                        height={410}
+                        alt={post.title}
+                        placeholder='blur'
+                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mMUNU2sBwACPgEsF/drhQAAAABJRU5ErkJggg=="
+                    />
+
+                    <h1>{post.title}</h1>
+                    <time>{post.upDatedAt}</time>
+                    <div className={styles.postContent} dangerouslySetInnerHTML={{__html: post.description}}></div>
+                </article>
+            </main>
+        </>
     )
 }
 
@@ -53,6 +74,8 @@ export const getServerSideProps: GetServerSideProps = async({req, params}:any)=>
 
 
     }
+
+    console.log("aqui está o post", post)
 
 
         return{
