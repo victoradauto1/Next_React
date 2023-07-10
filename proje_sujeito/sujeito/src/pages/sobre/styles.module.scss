@@ -1,0 +1,14 @@
+.container{
+    display: block;
+}
+
+.containerHeader{
+    min-height: calc(100vh - 6rem);
+    margin: 0 auto;
+    width: 1120px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
