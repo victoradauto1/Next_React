@@ -6,7 +6,7 @@ import styles from "./styles.module.scss";
 import { getPrismicClient } from "../../services/prismic";
 import Prismic from "@prismicio/client";
 import { RichText } from "prismic-dom";
-import { FaYoutube, FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa'
+import { FaYoutube, FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 type content = {
   title: string;
@@ -28,28 +28,28 @@ export default function Sobre({ content }: ContentProps) {
       </Head>
       <main className={styles.container}>
         <div className={styles.containerHeader}>
-            <section className={styles.ctaText}>
-                <h1>{content.title}</h1>
-                <p>{content.description}</p>
-                
-                <a href={content.youtube}>
-                    <FaYoutube size={40} />
-                </a>
-                <a href={content.facebook}>
-                    <FaFacebook size={40} />
-                </a>
-                <a href={content.instagram}>
-                    <FaInstagram size={40} />
-                </a>
-                <a href={content.linkedin}>
-                    <FaLinkedin size={40} />
-                </a>
+          <section className={styles.ctaText}>
+            <h1>{content.title}</h1>
+            <p>{content.description}</p>
 
-                <img src={content.banner} alt="Sobre Sujeito Programador" />
-            </section>
+            <a href={content.youtube}>
+              <FaYoutube size={40} />
+            </a>
+            <a href={content.facebook}>
+              <FaFacebook size={40} />
+            </a>
+            <a href={content.instagram}>
+              <FaInstagram size={40} />
+            </a>
+            <a href={content.linkedin}>
+              <FaLinkedin size={40} />
+            </a>
+          </section>
+          <section>
+            <img src={content.banner} alt="Sobre Sujeito Programador" />
+          </section>
         </div>
       </main>
-
     </>
   );
 }
@@ -66,7 +66,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const content = {
     title: RichText.asText(title),
-    description: RichText.asHtml(description),
+    description: RichText.asText(description),
     banner: banner.url,
     facebook: facebook.url,
     youtube: youtube.url,
@@ -78,5 +78,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       content,
     },
+    revalidate: 60 * 30 // a cada meia hora será revalidado (buildado novamente)
   };
 };
