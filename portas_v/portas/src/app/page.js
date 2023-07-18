@@ -6,7 +6,8 @@ import Porta from '@/components/porta/Porta'
 export default function Home() {
   return (
     <>
-      <Porta/>
+      <Porta selecionada={false}/>
+      <Porta selecionada/>
     </>
   )
 }
