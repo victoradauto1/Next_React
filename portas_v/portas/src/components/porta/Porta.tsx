@@ -1,7 +1,15 @@
-import styles from "./porta.module.css";
+const styles = require("./porta.module.css");
 
-export default function Porta(props) {
+import PortaModel from '../../model/porta'
 
+interface PortaProps{
+
+    porta: PortaModel
+}
+
+export default function Porta(props: PortaProps) {
+
+  const {porta} =  props
   const selecionada = props.selecionada? (styles.selecionada) : ''
 
   return (
