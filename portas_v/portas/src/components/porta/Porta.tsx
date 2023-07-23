@@ -1,6 +1,4 @@
-const styles = require("./porta.module.css");
-
-import estilo from './exemplo.module.css'
+import styles from './exemplo.module.css'
 
 import PortaModel from '../../model/porta'
 
