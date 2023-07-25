@@ -1,4 +1,4 @@
-import styles from './exemplo.module.css'
+import styles from './porta.module.css'
 
 import PortaModel from '../../model/porta'
 
@@ -10,13 +10,13 @@ interface PortaProps{
 export default function Porta(props: PortaProps) {
 
   const {porta} =  props
-  const selecionada = props.selecionada? (styles.selecionada) : ''
+  const selecionada = porta.selecionada? (styles.selecionada) : ''
 
   return (
     <div className={styles.area}>
       <div className={`${styles.estrutura} ${selecionada}`}>
         <div className={styles.porta}>
-          <div className={styles.numero}>3</div>
+          <div className={styles.numero}>{porta.numero}</div>
           <div className={styles.macaneta}></div>
         </div>
       </div>
