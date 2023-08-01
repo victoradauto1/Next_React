@@ -1,8 +1,9 @@
-import { useState } from 'react'
+"use client"
+import { useState} from 'react'
 import Porta from '../components/porta/Porta'
 import PortaModel from '../model/porta'
 
-export default function Home() {
+const Home = () =>{
 
   const [p1, setP1] = useState (new PortaModel(1))
   const [texto, setTexto] = useState("...")
@@ -16,3 +17,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home

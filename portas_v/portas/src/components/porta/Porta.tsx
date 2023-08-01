@@ -13,7 +13,7 @@ export default function Porta(props: PortaProps) {
   const porta =  props.value
   const selecionada = porta.selecionada? (styles.selecionada) : ''
 
-  const alternarSelecao = (e) =>{
+  const alternarSelecao = () =>{
     props.onChange(porta.alternarSelecao())
 
   }
