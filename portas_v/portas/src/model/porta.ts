@@ -1,8 +1,8 @@
 export default class PortaModel {
     #numero: number
-    #temPresente: boolean
-    #selecionada: boolean
-    #aberta!: boolean
+    #temPresente: boolean 
+    #selecionada: boolean 
+    #aberta!: boolean 
 
     constructor (numero: number, temPresente = false, selecionada = false, aberta = false){
         this.#numero =  numero
@@ -27,6 +27,12 @@ export default class PortaModel {
         return this.#aberta
     }
 
+    get fechada (){
+        return this!.#aberta
+    }
+
+    
+
     desselecionar(){
         const selecionada = false;
         return new PortaModel(this.numero, this.temPresente, selecionada, this.aberta) 
@@ -41,7 +47,5 @@ export default class PortaModel {
         const aberta = true
         return new PortaModel(this.numero, this.temPresente, this.selecionada, aberta)
     }
-
-
     
 }
