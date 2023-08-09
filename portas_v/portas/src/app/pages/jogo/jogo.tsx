@@ -1,14 +1,11 @@
-"use client"
+import styles from './jogo.module.css'
 import { useState} from 'react'
-import Porta from '../components/porta/Porta'
-import PortaModel from '../model/porta'
+import Porta from '../../../components/porta/Porta'
 import { atualizarPortas, criarPortas } from '@/functions/portas'
 
-const Home = () =>{
+export default function jogo(){
 
-  const [p1, setP1] = useState (new PortaModel(1))
- 
-  const [portas, setPortas] = useState(criarPortas(3,3))
+    const [portas, setPortas] = useState(criarPortas(3,3))
 
   function renderizarPortas(){
     return portas.map(porta => {
@@ -23,5 +20,3 @@ const Home = () =>{
     </div>
   )
 }
-
-export default Home
