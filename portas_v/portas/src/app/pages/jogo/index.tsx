@@ -4,6 +4,8 @@ import Porta from "../../../components/porta/[temPresente]";
 import { atualizarPortas, criarPortas } from "@/functions/portas";
 import Link from 'next/link'
 import { useRouter } from "next/router";
+import PortaModel from "@/model/porta"
+
 
 export default function jogo() {
 
@@ -17,7 +19,7 @@ export default function jogo() {
 
   
   function renderizarPortas() {
-    return portas.map((porta) => {
+    return portas.map((porta:PortaModel) => {
       return (
         <Porta
           key={porta.numero}
