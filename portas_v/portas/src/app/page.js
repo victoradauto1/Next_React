@@ -1,7 +1,8 @@
 "use client"
 import { useState} from 'react'
 import PortaModel from '../model/porta'
-import Jogo from '../../src/app/pages/jogo/Jogo'
+import Jogo from './pages/jogo/index'
+
 
 const Home = () =>{
 
