@@ -1,5 +1,5 @@
 import styles from "./jogo.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Porta from "../../../components/porta/[temPresente]";
 import { atualizarPortas, criarPortas } from "@/functions/portas";
 import Link from 'next/link'
@@ -7,16 +7,18 @@ import { useRouter } from "next/router";
 import PortaModel from "@/model/porta"
 
 
+
 export default function jogo() {
 
   const router =  useRouter()
 
-  const [portas, setPortas] = useState([]);
+  const [portas, setPortas] = useState<PortaModel[]>([]);
 
-
-  router.query.portas
-  router.query.temPresente
-
+ useEffect(() => {
+  const portas = router.query.portas !== undefined ? +router.query.portas : 0;
+  const temPresente = router.query.temPresente !== undefined ? +router.query.temPresente : 0;
+  setPortas(criarPortas(portas, temPresente));
+}, [router?.query]);
   
   function renderizarPortas() {
     return portas.map((porta:PortaModel) => {
