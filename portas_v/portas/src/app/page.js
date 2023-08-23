@@ -1,6 +1,6 @@
 "use client"
-import Jogo from '../app/pages/jogo/index'
 
+import Jogo from './jogo/index'
 
 const Home = () =>{
 
