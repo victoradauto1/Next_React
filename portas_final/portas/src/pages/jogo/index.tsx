@@ -12,6 +12,11 @@ export default function jogo() {
 
   const [portas, setPortas] = useState<PortaModel[]>([]);
 
+  console.log(router?.query)
+
+  // router.query.portas
+  // router.query.temPresente
+
 //  useEffect(() => {
 //   const portas = router.query.portas !== undefined ? +router.query.portas : 0;
 //   const temPresente = router.query.temPresente !== undefined ? +router.query.temPresente : 0;
