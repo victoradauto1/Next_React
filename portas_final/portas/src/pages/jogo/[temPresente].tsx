@@ -14,14 +14,11 @@ export default function jogo() {
 
   console.log(router?.query)
 
-  // router.query.portas
-  // router.query.temPresente
-
-//  useEffect(() => {
-//   const portas = router.query.portas !== undefined ? +router.query.portas : 0;
-//   const temPresente = router.query.temPresente !== undefined ? +router.query.temPresente : 0;
-//   setPortas(criarPortas(portas, temPresente));
-// }, [router?.query]);
+ useEffect(() => {
+  // const portas = +router.query.portas
+  // const temPresente = +router.query.temPresente
+  // setPortas(criarPortas(portas, temPresente))
+}, [router?.query]);
   
   function renderizarPortas() {
     return portas.map((porta:PortaModel) => {

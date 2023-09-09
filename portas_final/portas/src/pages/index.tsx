@@ -1,4 +1,4 @@
-import Jogo from './jogo/index'
+import Jogo from './jogo/[temPresente]'
 
 
 
