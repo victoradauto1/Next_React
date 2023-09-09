@@ -1,8 +1,8 @@
-import Jogo from './jogo/[temPresente]'
+import Jogo from './jogo/[portas1]/[temPresente]'
 
 
 
-export default function Home() {
+export default function Form() {
   return (
     <>
       <h1>Formulário inicial de entrada</h1>
