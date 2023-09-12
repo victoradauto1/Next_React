@@ -1,13 +1,18 @@
-import Jogo from './jogo/[portas1]/[temPresente]'
+import Cartao from '../components/cartao/index'
 
+import style from '@/styles/formulario.module.css'
 
-
-export default function Form() {
+export default function Formulario() {
   return (
-    <>
-      <h1>Formulário inicial de entrada</h1>
-      <Jogo/>
-
-    </>
+    <div className={style.formulario}>
+      <div>
+      <Cartao bgcolor='#c0392' ></Cartao>
+      <Cartao></Cartao>
+      </div>
+      <div>
+      <Cartao></Cartao>
+      <Cartao bgcolor='#'></Cartao>
+      </div>
+    </div>
   )
 }
