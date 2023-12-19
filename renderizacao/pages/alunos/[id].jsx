@@ -1,15 +1,20 @@
 
-export function getStaticPaths(){
+export async function getStaticPaths() {
+    const res = await fetch(`http://localhost:3000/api/alunos/rotasalunos`);
+    const ids = await res.json();
 
-    return{
-        fallback: false,
-        paths:[
-            { params: {id: '101'}},
-            { params: {id: '56'}},
-            { params: {id: '4509'}}
-        ]
-    }
+    const paths = ids.map((id) => {
+        return { params: { id: `${id}` } };
+    });
+
+    console.log(paths);
+
+    return {
+        fallback: true,
+        paths: paths // Não é necessário aninhar dentro de outro array
+    };
 }
+
 
 export async function getStaticProps({params}){
     const resp = await fetch(`http://localhost:3000/api/alunos/${params.id}`)
@@ -27,6 +32,7 @@ export default function alunos (props){
     const { aluno } = props
 
     return(
+        aluno ?
         <div>
             <h1>Detalhes Alunos</h1>
             <ul>
@@ -35,5 +41,10 @@ export default function alunos (props){
                 <li>{aluno.email}</li>
             </ul>
         </div>
-    )
+
+        : 
+
+        false
+        )
+        
 }
