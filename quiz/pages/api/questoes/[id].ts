@@ -19,13 +19,19 @@ export default function handler(
       (q) => q.id === idSelecionado
     );
 
-    const questaoEncontradaObjeto = questaoEncontrada.map((resp) =>
-      resp.toObject()
-    );
+    if(questaoEncontrada.length === 1){
 
-    res.status(200).json(questaoEncontradaObjeto);
+      const questaoSelecionada = questaoEncontrada[0].embaralharRespostas()
+      const obj = questaoSelecionada.responderCom(0).toObject()
+      res.status(200).json(obj)
+
+    }else{
+      console.log("Questão duplicada")
+    }
+    
+    
   } else {
     console.error("req.query.id não é uma string ou está indefinido");
-    res.status(204);
+    res.status(404);
   }
 }

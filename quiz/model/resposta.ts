@@ -14,7 +14,7 @@ export default class respostaModel{
     }
 
     static errada(valor: string){
-        return new respostaModel(valor, true)
+        return new respostaModel(valor, false)
     }
     get valor(){
         return this.#valor
@@ -28,11 +28,15 @@ export default class respostaModel{
         return this.#revelada
     }
 
+    revelar(){
+        return new respostaModel(this.valor, this.certa, true) 
+    }
     toObejct (){
         return{
             valor: this.#valor,
             certa: this.#certa,
             revelada: this.#revelada
+
         }
     }
 }

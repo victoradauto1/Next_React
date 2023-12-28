@@ -2,7 +2,7 @@ import questaoModel from "@/model/questao";
 import respostaModel from "@/model/resposta";
 
 const questoes:questaoModel[] = [
-        new questaoModel(306, 'Qual bicho transmite a doença de Chagas?',
+        new questaoModel(201, 'Qual bicho transmite a doença de Chagas?',
         [   respostaModel.errada('Pulga'),
             respostaModel.errada('Pernilongo'),
             respostaModel.errada('Barata'),
@@ -13,6 +13,18 @@ const questoes:questaoModel[] = [
             respostaModel.errada('Coco'),
             respostaModel.errada('Chuchu'),
             respostaModel.certa('Abóbora')
+        ]),
+        new questaoModel(203, 'Qual o coletivo de cães?',
+        [   respostaModel.errada('Manda'),
+            respostaModel.errada('Alcateia'),
+            respostaModel.errada('Rebanho'),
+            respostaModel.certa('Matilha')
+        ]),
+        new questaoModel(204, 'Qual é o triangulo que tem todos os lados diferentes?',
+        [   respostaModel.errada('Equilátero'),
+            respostaModel.errada('Isósceles'),
+            respostaModel.errada('Trapézio'),
+            respostaModel.certa('Escaleno')
         ]),
 ]
 
