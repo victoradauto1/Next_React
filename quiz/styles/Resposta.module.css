@@ -1,0 +1,48 @@
+.resposta{
+    display: flex;
+    height: 100px;
+    margin: 10px;
+    min-width: 500px;
+    width: 80%;
+   
+}
+
+.conteudoResposta{
+    display: flex;
+    flex: 1;
+    position: relative;
+}
+
+.frente, .verso{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.frente{
+    background-color: #fff;
+    color: #000;
+    align-items: center;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.letra{
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    background-color: darkkhaki;
+    margin-right: 15px;
+    color: #fff;
+}
+
+.valor{
+    font-size: 1.3rem;
+    font-weight: 700;
+}

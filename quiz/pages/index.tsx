@@ -4,15 +4,25 @@ import { Inter } from 'next/font/google'
 import Questao from '@/components/Questao'
 import questaoModel from '@/model/questao'
 import respostaModel from '@/model/resposta'
+import { useState } from 'react'
 
-export default function Home() {
 
-  const questaoTeste = new questaoModel(1, 'Qual o maior país do Mundo?',
+const questaoMock = new questaoModel(1, 'Qual é o maior país do Mundo?',
   [   respostaModel.errada('China'),
       respostaModel.errada('EUA'),
       respostaModel.errada('Canadá'),
       respostaModel.certa('Rússia')
   ])
+
+
+export default function Home() {
+
+  const [questao, setQuestao] = useState(questaoMock)
+
+  function onResponse (indice: number){
+    console.log(indice)
+    setQuestao(questao.responderCom(indice))
+  } 
 
   return (
     <div style={{
@@ -23,7 +33,7 @@ export default function Home() {
 
 
        }}>
-        <Questao  valor={questaoTeste}/>
+        <Questao  valor={questao} onResponse={onResponse}/>
     </div>
     )
 }

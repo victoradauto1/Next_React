@@ -5,17 +5,18 @@ interface RespostaProps{
     valor: respostaModel
     indice: number
     letra: string
-    corLetra: string
+    corFundoLetra: string
+    onResponse: (indice: number)=> void
 }
 
 export default function Resposta(props: RespostaProps){
 
     const resposta = props.valor
     return(
-        <div className={styles.resposta}>
+        <div className={styles.resposta} onClick={()=>props.onResponse(props.indice)}>
             <div className={styles.conteudoResposta}>
                 <div className={styles.frente}>
-                    <div className={styles.letra}>
+                    <div className={styles.letra} style={{backgroundColor: props.corFundoLetra}}>
                         {props.letra}
                     </div>
                     <div className={styles.valor}>
