@@ -17,7 +17,6 @@
 
 .respostaRevelada.conteudoResposta{
     transform: rotateY(180deg);
-    
 }
 
 .frente, .verso{

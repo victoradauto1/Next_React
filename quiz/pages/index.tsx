@@ -19,7 +19,7 @@ export default function Home() {
 
 
   const[idsDasQuestoes, setIdsDasQuestoes] = useState<number[]>([]);
-  const [questao, setQuestao] = useState<questaoModel>();
+  const [questao, setQuestao] = useState<questaoModel>(questaoMock);
   const [respostasCertas, setRespostasCertas] = useState<number>(0)
 
   async function recebendoIdsDasQuestoes(){
@@ -75,6 +75,8 @@ export default function Home() {
     })
   }
 
+  console.log(questao)
+  
   return (
     <div>
       <Questionario

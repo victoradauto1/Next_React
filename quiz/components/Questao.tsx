@@ -13,7 +13,7 @@ const letras = [
 
 interface QuestaoProps {
   valor: questaoModel;
-  onResponse: (indice: number)=> void
+  respostaFornecida: (indice: number)=> void
   tempoPraResposta?:number
   timeIsOver: ()=> void
 }
@@ -30,7 +30,7 @@ export default function Questao(props: QuestaoProps) {
           indice={i}
           letra={letras[i].letra}
           corFundoLetra={letras[i].cor}
-          onResponse={props.onResponse}
+          respostaFornecida={props.respostaFornecida}
         />
       );
     });
