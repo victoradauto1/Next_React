@@ -31,6 +31,12 @@ export default class respostaModel{
     revelar(){
         return new respostaModel(this.valor, this.certa, true) 
     }
+
+    static criarUsandoObjeto(obj:respostaModel): respostaModel{
+        return new respostaModel(obj.valor, obj.certa, false)
+    }
+
+
     toObejct (){
         return{
             valor: this.#valor,

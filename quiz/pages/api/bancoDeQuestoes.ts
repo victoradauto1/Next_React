@@ -26,6 +26,12 @@ const questoes:questaoModel[] = [
             respostaModel.errada('Trapézio'),
             respostaModel.certa('Escaleno')
         ]),
+        new questaoModel(205, "Qual é o maior país do Mundo?", [
+            respostaModel.errada("China"),
+            respostaModel.errada("EUA"),
+            respostaModel.errada("Canadá"),
+            respostaModel.certa("Rússia"),
+          ])
 ]
 
 export default questoes

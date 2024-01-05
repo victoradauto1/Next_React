@@ -8,7 +8,7 @@ export default class questaoModel{
     #acertou: boolean
     // #respondida: boolean
 
-    constructor(id: number, enunciado: string, respostas: any[], acertou = false){
+    constructor(id: number, enunciado: string, respostas: respostaModel[], acertou = false){
         this.#id = id
         this.#enunciado = enunciado
         this.#respostas = respostas
@@ -53,6 +53,12 @@ export default class questaoModel{
     embaralharRespostas(): questaoModel{
         let respostasEmbaralhadas =  embaralhar(this.#respostas)
         return new questaoModel(this.#id, this.#enunciado, respostasEmbaralhadas, this.#acertou)
+    }
+
+    static criarUsandoObjeto(obj:questaoModel): questaoModel{
+        const respostas = obj.respostas.map( resp => respostaModel.criarUsandoObjeto(resp)
+        )
+        return new questaoModel(obj.id, obj.enunciado, respostas, obj.acertou )
     }
 
     toObject(){
