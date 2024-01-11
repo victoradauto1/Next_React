@@ -6,7 +6,7 @@ export default function BotaoAlternartema() {
 
 const {tema, alternarTema} = useDataApp()
 
-  return tema !== "dark" ? (
+  return tema === "dark" ? (
     <div
       onClick={alternarTema}
       className={`

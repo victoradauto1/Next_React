@@ -9,14 +9,12 @@ interface NotificacoesProps {
 
 export default function Notificacoes(props: NotificacoesProps) {
 
-  const {tema, alternarTema} = useDataApp()
-
   return (
     <Layout
       titulo="Notificações"
       subtitulo="Aqui você definirá as suas notificações"
     >
-      <h3>{tema}</h3>
+    <h1>{props.titulo}</h1>
     </Layout>
   );
 }
