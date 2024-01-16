@@ -1,6 +1,4 @@
 import Layout from "@/components/template/Layout";
-import useDataApp from "@/data/hook/useAppData";
-
 
 export default function Perfil(){
     return(

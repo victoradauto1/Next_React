@@ -1,12 +1,11 @@
 import AuthInput from "@/components/Auth/AuthInput";
 import { IconeAtencao } from "@/components/icons";
-import { use, useState } from "react";
+import {useState } from "react";
 import useAuth from "@/data/hook/useAuth";
 interface AutenticacaoProps {}
 
 export default function Autenticacao(props: AutenticacaoProps) {
-
-  const {usuario, loginGoogle} = useAuth()
+  const { cadastrarUsuario, login, loginGoogle } = useAuth();
 
   const [erro, setErro] = useState(null);
   const [modo, setModo] = useState<"login" | "cadastro">("login");
@@ -14,19 +13,25 @@ export default function Autenticacao(props: AutenticacaoProps) {
   const [senha, setSenha] = useState("");
 
   function submeter() {
-    if (modo === "login") {
-      console.log("Login");
-      exibirError("ocorreuu um erro no Login")
-    } else {
-      console.log("Cadastro");
-      exibirError("ocorreu um erro no cadastro")
+
+  
+      if (modo === "login") {
+        if (login) {
+          login(email, senha);
+          exibirError("ocorreuu um erro no Login");
+        }
+      } else {
+        if (cadastrarUsuario) {
+          cadastrarUsuario(email, senha);
+          exibirError("ocorreu um erro no cadastro");
+        }
+      }
     }
-  }
+   
 
-  function exibirError(msg: any, tempoEmSegundos =5){
-    setErro(msg)
-    setTimeout(()=>setErro(null), tempoEmSegundos * 1000)
-
+  function exibirError(msg:any , tempoEmSegundos = 5) {
+    setErro(msg);
+    setTimeout(() => setErro(null), tempoEmSegundos * 1000);
   }
 
   return (
