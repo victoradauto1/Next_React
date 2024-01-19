@@ -1,32 +1,45 @@
 import Cliente from "@/core/Cliente";
 import { IconeApagar, IconeEditar } from "@/components/icons/Icones";
 
-
 interface TabelaProps {
   clientes: Cliente[];
+  clienteSelecionado?: (cliente: Cliente) => void;
+  clienteExcluido?: (cliente: Cliente) => void;
 }
 
 export default function Tabela(prosp: TabelaProps) {
+
+  const exibirAcoes = prosp.clienteExcluido || prosp.clienteSelecionado
   function renderizarCabecalho() {
     return (
       <tr>
         <th className={`text-left p-4`}>Código</th>
         <th className={`text-left p-4`}>Nome</th>
         <th className={`text-left p-4`}>Idade</th>
-        <th className={`text-center p-4`}>Ações</th>
+        {exibirAcoes?(<th className={`text-center p-4`}>Ações</th>): false}
+        
       </tr>
     );
   }
 
-  function renderizarAcoes() {
+  function renderizarAcoes(cliente:Cliente) {
     return (
-      <td className={`flex self-center`}>
-        <button className={`
+      <td className={`flex justify-center`}>
+        {prosp.clienteSelecionado ? (<button onClick={()=> prosp.clienteSelecionado?.(cliente)}
+          className={`
         flex justify-center items-center text-green-600 rounded-lg p-1 m-1 mt-3
         hover:bg-green-200
-        `}>{IconeEditar}</button>
-        <button className={`flex justify-center items-center text-red-600 rounded-lg p-1 m-1 mt-3
-        hover:bg-red-100`}>{IconeApagar}</button>
+        `}
+        >
+          {IconeEditar}
+        </button>): false}
+        
+        {prosp.clienteExcluido? (<button onClick={()=> prosp.clienteExcluido?.(cliente)}
+          className={`flex justify-center items-center text-red-600 rounded-lg p-1 m-1 mt-3
+        hover:bg-red-100`}
+        >
+          {IconeApagar}
+        </button>): false}
       </td>
     );
   }
@@ -42,7 +55,7 @@ export default function Tabela(prosp: TabelaProps) {
           <td className={`text-left p-4`}>{cliente.id}</td>
           <td className={`text-left p-4`}>{cliente.nome}</td>
           <td className={`text-left p-4`}>{cliente.idade}</td>
-          {renderizarAcoes()}
+          {exibirAcoes? renderizarAcoes(cliente): false}
         </tr>
       );
     });
