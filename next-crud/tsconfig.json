@@ -17,6 +17,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "public/images/Icones.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "public/images/Icones.tsx", "src/firebase/config.js"],
   "exclude": ["node_modules"]
 }

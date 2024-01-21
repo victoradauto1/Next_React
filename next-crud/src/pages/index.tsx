@@ -6,6 +6,10 @@ import Cliente from "@/core/Cliente";
 import { useState } from "react";
 
 export default function Home() {
+
+  const [cliente, setCliente] = useState<Cliente>(Cliente.vazio())
+  const [visivel, setVisivel] = useState<"tabela" | "form">("tabela");
+
   const clientes = [
     new Cliente("Ana", 22, "1"),
     new Cliente("Paulo", 47, "2"),
@@ -14,18 +18,23 @@ export default function Home() {
   ];
 
   function clienteSelecionado(cliente: Cliente) {
-    console.log(cliente.nome);
+    setCliente(cliente)
+    setVisivel('form')
   }
 
   function clienteExcluido(cliente: Cliente) {
     console.log(`excluir... ${cliente.nome}`);
   }
 
-  function salvarcliente(cliente: Cliente) {
-    console.log(cliente)
+  function novoCliente(cliente: Cliente) {
+   setCliente(Cliente.vazio())
+   setVisivel('form')
   }
 
-  const [visivel, setVisivel] = useState<"tabela" | "form">("tabela");
+  function salvarcliente(cliente: Cliente) {
+    console.log(cliente)
+    setVisivel('tabela')
+  }
 
   return (
     <div
@@ -39,16 +48,17 @@ export default function Home() {
         {visivel === "tabela" ? (
           <>
             <div className="flex justify-end">
-              <Botao className="mb-4" onCLick={()=>setVisivel('form')}>Novo cliente</Botao>
+              <Botao className="mb-4" onCLick={()=>novoCliente}>Novo cliente</Botao>
             </div>
             <Tabela
               clientes={clientes}
               clienteSelecionado={clienteSelecionado}
+              clienteExcluido={clienteExcluido}
             ></Tabela>
           </>
         ) : (
           <Formulario 
-          cliente={clientes[0]} 
+          cliente={cliente} 
           cancelado={()=>setVisivel('tabela')}
           clienteMudou={salvarcliente}
           />
