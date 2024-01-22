@@ -3,38 +3,17 @@ import Formulario from "@/components/Formulario";
 import Layout from "@/components/Layout";
 import Tabela from "@/components/Tabela";
 import Cliente from "@/core/Cliente";
-import { useState } from "react";
+import useClientes from "@/hooks/useClientes";
+import { useEffect } from "react";
+
 
 export default function Home() {
 
-  const [cliente, setCliente] = useState<Cliente>(Cliente.vazio())
-  const [visivel, setVisivel] = useState<"tabela" | "form">("tabela");
+  const { salvarcliente, clienteExcluido, clienteSelecionado, novoCliente, obterTodos, cliente, clientes, visivel, setVisivel} = useClientes()
 
-  const clientes = [
-    new Cliente("Ana", 22, "1"),
-    new Cliente("Paulo", 47, "2"),
-    new Cliente("Júlia", 42, "3"),
-    new Cliente("Pedro", 42, "3"),
-  ];
-
-  function clienteSelecionado(cliente: Cliente) {
-    setCliente(cliente)
-    setVisivel('form')
-  }
-
-  function clienteExcluido(cliente: Cliente) {
-    console.log(`excluir... ${cliente.nome}`);
-  }
-
-  function novoCliente(cliente: Cliente) {
-   setCliente(Cliente.vazio())
-   setVisivel('form')
-  }
-
-  function salvarcliente(cliente: Cliente) {
-    console.log(cliente)
-    setVisivel('tabela')
-  }
+  useEffect(()=>{
+    obterTodos()
+  },[])
 
   return (
     <div
@@ -45,10 +24,13 @@ export default function Home() {
     `}
     >
       <Layout titulo="Cadastro simples">
-        {visivel === "tabela" ? (
+        {visivel !== "form" ? (
           <>
             <div className="flex justify-end">
-              <Botao className="mb-4" onCLick={()=>novoCliente}>Novo cliente</Botao>
+              <Botao 
+              className="mb-4" 
+              onCLick={()=>novoCliente(Cliente.vazio())}
+              >Novo cliente</Botao>
             </div>
             <Tabela
               clientes={clientes}
