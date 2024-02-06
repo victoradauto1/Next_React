@@ -4,7 +4,7 @@ export interface GamesProps{
     title:string;
     description:string;
     image_url: string;
-    plataforms: string[];
+    platforms: string[];
     categories: string[];
     release: string
 }
